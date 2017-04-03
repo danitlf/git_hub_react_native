@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 var api = require('../utils/api');
 var Profile = require('./Profile');
-
+var Notes = require('./notes');
+var Repositories = require('./repositories');
 import {
     AppRegistry,
     NavigatorIOS,
@@ -49,17 +50,37 @@ class Dashboard extends Component {
         return obj;
     }
     goToNotes() {
-        console.log("notes");
+        api.getNotes(this.props.userInfo.login)
+        .then((res)=> {
+            res = res||{};
+            this.props.navigator.push({
+                component: Notes,
+                title: 'Notes',
+                passProps:{
+                    notes: res,
+                    userInfo: this.props.userInfo
+                }
+            })
+        })
     }
     goToProfile() {
         this.props.navigator.push({
             title: "Profile",
             component: Profile,
-            passProps: { userInfo: this.props.userInfo }
+            passProps: { userInfo: this.props.userInfo, }
         });
     }
     goToRepos() {
-        console.log("notes");
+        api.getRepos(this.props.userInfo.login)
+            .then((res) => {
+                this.props.navigator.push({
+                    title: "Repositories",
+                    component: Repositories,
+                    passProps: { userInfo: this.props.userInfo ,
+                    repos: res}
+                });
+            });
+
     }
     render() {
         return (

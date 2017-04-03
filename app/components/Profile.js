@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 var Badge = require('./Badge');
+var Separator = require('./helpers/separator');
 import {
     AppRegistry,
     NavigatorIOS,
@@ -57,6 +58,7 @@ class Profile extends Component {
                             <Text style={styles.rowContent}>
                                 {userInfo[item]}
                             </Text>
+                            <Separator/>
                         </View>
                     </View>
                 )
